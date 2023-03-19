@@ -1,0 +1,117 @@
+* {
+	font-family: arial;
+}
+
+p, button {
+	font-size: 1em;
+}
+
+p {
+	color: #6336E0;
+}
+
+h1 {
+	font-size: 2.5em;
+	color: grey;
+}
+
+h4 {
+	font-size: 1.5em;
+}
+
+body {
+	text-align: center;
+	margin: 0;
+	background-image: linear-gradient(135deg, #6336E0, grey, grey, #21DE23);
+}
+
+#SiteHeader {
+	background-image: linear-gradient(135deg, #FF2662, #FFE214, #21DE23);
+	display: flex;
+	justify-content: center;
+	border-bottom-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+}
+
+.Explanation {
+	color: white;
+	margin-left: 12px;
+	margin-right: 12px;
+}
+
+.ImgButton {
+	font-size: 1.15em;
+	margin: 3px;
+	background-color: inherit;
+	color: #32D5F5;
+	border: 3px white;
+	border-style: none none dashed none;
+	transition-duration: 1s;
+}
+
+.ImgButton:hover {
+	font-size: 1.3em;
+	border-style: none none solid none;
+	border-radius: 10px;
+	background-color: #32D5F5;
+	color: white;
+}
+
+.Time {
+	font-weight: bold;
+	transition-duration: 2s;
+}
+
+.BoundDiv {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.ConnTitle {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.ConnDiv {
+	margin: 4px;
+	max-width: 400px;
+	min-width: 300px;
+	width: 50%;
+	background-image: linear-gradient(135deg, transparent, #FFE214, #32D5F5, transparent);
+	padding: 16px;
+	border: 8px solid white;
+	border-radius: 40px;
+}
+
+.Content {
+	max-width: 100%;
+}
+
+.ImageDiv {
+	margin: auto;
+}
+
+.loader {
+  border-radius: 50%;
+  border-top: 16px solid white;
+  border-bottom: 16px solid white;
+  border-left: none;
+  border-right: none;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s ease-in-out infinite; /* Safari */
+  animation: spin 2s ease-in-out infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

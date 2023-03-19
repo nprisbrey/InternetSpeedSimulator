@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="styles.css">
+	<title>Visual Argument - Writing 150</title>
+	<meta name="viewport" content="width=device-width">
+
+	<script>
+		const imageSizes = {'Keanu.gif':2.30,'Dog.gif':2.87,'Knowing.gif':1.38,'Salt.gif':3.83,'Trash.gif':2.71,'Yeet.gif':0.98,'DogKiss.gif':1.22,'Rainbow.png':34.9,'Iceberg.png':4.75,'IronMan.png':5.86,'Mandalorian.png':13.4,'BigBen.png':20.1};
+		const loaded = {"FO":0,"Cable":0,"Sat":0,"DSL":0,"DU":0,"NI":0};
+		var startTime = 0;
+
+		window.setInterval(() => {
+			//Find out current image
+			var imageName = document.getElementById("FOImage").src;
+			imageName = imageName.slice(imageName.lastIndexOf("/") + 1);
+
+			//If there's currently no image, exit
+			if(imageName == "index.html") {
+				return;
+			}
+
+			//All numbers represent Megabytes / sixteenth of a second
+			loaded["FO"] += 7.34375;
+			loaded["Cable"] += 1.171875;
+			loaded["Sat"] += 0.2421875;
+			loaded["DSL"] += 0.046875;
+			loaded["DU"] += 0.0004375;
+
+			Object.keys(loaded).forEach((key) => {
+				//Update the counter
+				document.getElementById(key + "Counter").innerText = (Math.round(loaded[key] * 1000) / 1000) + "/" + imageSizes[imageName] + " Megabytes (MB)";
+
+				//Update Pecentage
+				document.getElementById(key + "Percent").innerText = Math.round((loaded[key] / imageSizes[imageName]) * 100) + "% Loaded";
+
+				//If the image has been fully "loaded"
+				if(loaded[key] >= imageSizes[imageName]) {
+					//If we need to report how long it took to load
+					if(document.getElementById(key + "Time").innerText == "") {
+						document.getElementById(key + "Time").innerText = "Seconds to Load: " + (Math.round(performance.now() - startTime)/1000);
+						setTimeout(() => {
+							document.getElementById(key + "Time").style.removeProperty("color");
+						}, 1000);
+					}
+
+					document.getElementById(key + "ImageDiv").classList.remove("loader");
+					document.getElementById(key + "Image").style.removeProperty("display");
+					document.getElementById(key + "CounterDiv").style.display = "none";
+				}
+			});			
+		}, 62.5);
+
+		function setImage(imageLoc) {
+			//For each type of connection
+			Object.keys(loaded).forEach((key) => {
+				//Hide image and set it to correct source
+				document.getElementById(key + "Image").style.display = "none";
+				document.getElementById(key + "Image").src = imageLoc;
+
+				//Reset amount loaded
+				loaded[key] = 0;
+
+				//Remove possible previous time
+				document.getElementById(key + "Time").innerText = "";
+				document.getElementById(key + "Time").style.color = "red";
+
+				//Display Megabyte counter div
+				document.getElementById(key + "CounterDiv").style.removeProperty("display");
+
+				//Start loading bar
+				document.getElementById(key + "ImageDiv").classList.add("loader");
+			});
+
+			//Reset startTime
+			startTime = performance.now();
+		}
+	</script>
+</head>
+<body>
+	<div id="SiteHeader">
+		<h1>Internet Speed Simulator</h1>
+	</div>
+	<h4 class="Explanation">Explanation</h4>
+	<p class="Explanation">This website simulates how fast different at-home internet connections in the United States loads. I have positioned them in order by relative speed and stated roughly how many households in the United States subscribe to each type of internet connection at home. Note that the numbers are by <span style="font-weight:bold;">households</span> of people, not number of people.</p>
+	<p class="Explanation">Click on each of the different media below to simulate their loading time. Smaller images (faster load times) are towards the left and larger images (large enough to simulate loading a small webpage) are towards the right. Can you imagine yours being one of the ~28 million homes with Dial-Up or No Internet?</p>
+	<div>
+		<h4 class="Explanation">Select the media that you'd like to load:</h4>
+		<div>
+			<button class="ImgButton" onclick="setImage('Yeet.gif')">Yeet</button>
+			<button class="ImgButton" onclick="setImage('DogKiss.gif')">Dog Kiss</button>
+			<button class="ImgButton" onclick="setImage('Knowing.gif')">If You Know, You Know</button>
+			<button class="ImgButton" onclick="setImage('Keanu.gif')">Keanu Reeves</button>
+			<button class="ImgButton" onclick="setImage('Trash.gif')">Your Garbage Man</button>
+			<button class="ImgButton" onclick="setImage('Dog.gif')">Dog Ears</button>
+			<button class="ImgButton" onclick="setImage('Salt.gif')">Salt</button>
+			<button class="ImgButton" onclick="setImage('Iceberg.png')">Iceberg</button>
+			<button class="ImgButton" onclick="setImage('IronMan.png')">Iron Man</button>
+			<button class="ImgButton" onclick="setImage('Mandalorian.png')">Mandalorian</button>
+			<button class="ImgButton" onclick="setImage('BigBen.png')">Big Ben</button>
+			<button class="ImgButton" onclick="setImage('Rainbow.png')">Rainbow</button>
+		</div>
+	</div>
+	<br>
+	<div class="BoundDiv">
+		<div class="ConnDiv">
+			<p class="ConnTitle">Fiber-Optic</p>
+			<p>18,600,000 American Households</p>
+			<p class="Time" id="FOTime"></p>
+			<div class="counter" id="FOCounterDiv">
+				<p id="FOCounter">0/0 Megabytes (MB)</p>
+				<p id="FOPercent"></p>
+			</div>
+			<div class="ImageDiv" id="FOImageDiv">
+				<image src="" class="Content" id="FOImage" alt="">
+			</div>
+		</div>
+		<div class="ConnDiv">
+			<p class="ConnTitle">Cable</p>
+			<p>72,800,000 American Households</p>
+			<p class="Time" id="CableTime"></p>
+			<div class="counter" id="CableCounterDiv">
+				<p id="CableCounter">0/0 Megabytes (MB)</p>
+				<p id="CablePercent"></p>
+			</div>
+			<div class="ImageDiv" id="CableImageDiv">
+				<image src="" class="Content" id="CableImage" alt="">
+			</div>
+		</div>
+		<div class="ConnDiv">
+			<p class="ConnTitle">Satellite</p>
+			<p>8,021,594 American Households</p>
+			<p class="Time" id="SatTime"></p>
+			<div class="counter" id="SatCounterDiv">
+				<p id="SatCounter">0/0 Megabytes (MB)</p>
+				<p id="SatPercent"></p>
+			</div>
+			<div class="ImageDiv" id="SatImageDiv">
+				<image src="" class="Content" id="SatImage" alt="">
+			</div>
+		</div>
+		<div class="ConnDiv">
+			<p class="ConnTitle">DSL</p>
+			<p>33,000,000 American Households</p>
+			<p class="Time" id="DSLTime"></p>
+			<div class="counter" id="DSLCounterDiv">
+				<p id="DSLCounter">0/0 Megabytes (MB)</p>
+				<p id="DSLPercent"></p>
+			</div>
+			<div class="ImageDiv" id="DSLImageDiv">
+				<image src="" class="Content" id="DSLImage" alt="">
+			</div>
+		</div>
+		<div class="ConnDiv">
+			<p class="ConnTitle">Dial-Up</p>
+			<p>265,331 American Households</p>
+			<p class="Time" id="DUTime"></p>
+			<div class="counter" id="DUCounterDiv">
+				<p id="DUCounter">0/0 Megabytes (MB)</p>
+				<p id="DUPercent"></p>
+			</div>
+			<div class="ImageDiv" id="DUImageDiv">
+				<image src="" class="Content" id="DUImage" alt="">
+			</div>
+		</div>
+		<div class="ConnDiv">
+			<p class="ConnTitle">No Internet</p>
+			<p>27,611,736 American Households</p>
+			<p class="Time" id="NITime"></p>
+			<div class="counter" id="NICounterDiv">
+				<p id="NICounter">0/0 Megabytes (MB)</p>
+				<p id="NIPercent"></p>
+			</div>
+			<div class="ImageDiv" id="NIImageDiv">
+				<image src="" class="Content" id="NIImage" alt="">
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+</body>
+</html>
